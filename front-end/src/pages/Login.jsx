@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { MdLogin } from "react-icons/md";
+import SummaryApi from "../common/Api";
+import axios from "axios";
+import { toast } from "react-toastify";
+import Context from "../context";
+
 
 function Login() {
   const navigate = useNavigate();
+  const { fetchUserDetails} = useContext(Context)
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({
     email: "",
@@ -21,13 +26,44 @@ function Login() {
     })
 }
 
+
+const handleSubmit = async (e) => {
+  e.preventDefault()
+  
+  axios.defaults.withCredentials = true;
+
+  const config = {
+    header: "application/json",
+  
+  };
+  const dataapi= await axios.post(SummaryApi.signIN.url,
+    {
+      email:data.email,
+      password:data.password,
+      
+    },
+    config,
+    
+  
+  )
+  
+  if(dataapi.data.success==true){
+    toast.success(dataapi.data.message)
+    navigate("/")
+    fetchUserDetails()
+  }else {
+    toast.error(dataapi.data.message)
+  }
+  
+  
+  }
   return (
     <section id="login">
       <div className="mx-auto container p-4 ">
         <div className="bg-slate-200 p-5 w-full max-w-sm mx-auto ">
           
 
-          <form className="pt-6 flex flex-col gap-2">
+          <form   onSubmit={handleSubmit} className="pt-6 flex flex-col gap-2">
             <div className="grid">
               <label>Email : </label>
               <div className="bg-slate-100 p-2">

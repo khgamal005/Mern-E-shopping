@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import ROLE from '../common/role'
 import { IoMdClose } from "react-icons/io";
-import SummaryApi from '../common';
 import { toast } from 'react-toastify';
+import SummaryApi from '../common/Api';
 
 const ChangeUserRole = ({
+    // eslint-disable-next-line react/prop-types
     name,
     email,
     role,
@@ -17,7 +18,7 @@ const ChangeUserRole = ({
     const handleOnChangeSelect = (e) => {
         setUserRole(e.target.value)
 
-        console.log(e.target.value)
+
     }
 
     const updateUserRole = async() =>{
@@ -41,7 +42,7 @@ const ChangeUserRole = ({
             callFunc()
         }
 
-        console.log("role updated",responseData)
+   
 
     }
 

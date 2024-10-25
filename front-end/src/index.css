@@ -6,6 +6,20 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
-
 }
 
+.main{
+min-height: 100vh;
+position: relative;
+
+
+}
+.footer{
+
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.customShadow{
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
