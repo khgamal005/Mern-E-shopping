@@ -6,6 +6,7 @@ import uploadImage from "../helpers/uploadImage";
 import { MdDelete } from "react-icons/md";
 import DisplayImage from "./DisplayImage";
 
+
 const UploadProduct = ({ onClose, fetchData }) => {
   const [data, setData] = useState({
     productName: "",
