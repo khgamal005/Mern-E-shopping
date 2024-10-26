@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { CgClose } from 'react-icons/cg'
 
 const DisplayImage = ({

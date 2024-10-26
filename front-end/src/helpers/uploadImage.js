@@ -1,9 +1,10 @@
-const url = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME_CLOUDINARY}/image/upload`
+const url = `https://api.cloudinary.com/v1_1/davb7cdki/image/upload`
+// https://api.cloudinary.com/v1_1/:cloud_name/:action
 
 const uploadImage  = async(image) => {
     const formData = new FormData()
     formData.append("file",image)
-    formData.append("upload_preset","mern_product")
+    formData.append("upload_preset","e-shopping")
     
 
     const dataResponse = await fetch(url,{
