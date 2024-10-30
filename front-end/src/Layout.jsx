@@ -8,6 +8,7 @@ import Context from './context';
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "./store/userSlice";
 
+
 const Layout = () => {
   const dispatch = useDispatch()
 
@@ -41,6 +42,7 @@ const Layout = () => {
         />
         
         <Header/>
+
         <main className='min-h-[calc(100vh-120px)] pt-16'>
           <Outlet/>
         </main>

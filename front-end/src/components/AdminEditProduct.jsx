@@ -1,12 +1,14 @@
+/* eslint-disable react/prop-types */
 import  { useState } from 'react'
 import { CgClose } from "react-icons/cg";
 import productCategory from '../helpers/productCategory';
 import { FaCloudUploadAlt } from "react-icons/fa";
 import uploadImage from '../helpers/uploadImage';
-import DisplayImage from './DisplayImage';
-import { MdDelete } from "react-icons/md";
-import SummaryApi from '../common';
+
 import {toast} from 'react-toastify'
+import SummaryApi from '../common/Api';
+import { MdDelete } from 'react-icons/md';
+import DisplayImage from './DisplayImage';
 
 const AdminEditProduct = ({
     onClose,
@@ -162,7 +164,7 @@ const AdminEditProduct = ({
                          {
                            data.productImage.map((el,index)=>{
                              return(
-                               <div className='relative group'>
+                               <div key={index} className='relative group'>
                                    <img 
                                      src={el} 
                                      alt={el} 

@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+/* eslint-disable react/prop-types */
+import  { useState } from 'react'
 import { MdModeEditOutline } from "react-icons/md";
+
+import displayUSDCurrency from '../helpers/displayCurrency';
 import AdminEditProduct from './AdminEditProduct';
-import displayINRCurrency from '../helpers/displayCurrency';
 
 const AdminProductCard = ({
     data,
@@ -15,13 +17,16 @@ const AdminProductCard = ({
             <div className='w-32 h-32 flex justify-center items-center'>
               <img src={data?.productImage[0]}  className='mx-auto object-fill h-full'/>   
             </div> 
-            <h1 className='text-ellipsis line-clamp-2'>{data.productName}</h1>
+
+            <h1 className='text-ellipsis line-clamp-2'>
+                {data.productName}
+                </h1>
 
             <div>
 
                 <p className='font-semibold'>
                   {
-                    displayINRCurrency(data.sellingPrice)
+                    displayUSDCurrency(data.sellingPrice)
                   }
         
                 </p>

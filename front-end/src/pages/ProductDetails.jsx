@@ -1,15 +1,15 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { useState,useEffect ,useCallback} from "react"
+import SummaryApi from "../common/Api"
 import  { useNavigate, useParams } from 'react-router-dom'
-import SummaryApi from '../common'
-import { FaStar } from "react-icons/fa";
 import { FaStarHalf } from "react-icons/fa";
-import displayINRCurrency from '../helpers/displayCurrency';
-import VerticalCardProduct from '../components/VerticalCardProduct';
-import CategroyWiseProductDisplay from '../components/CategoryWiseProductDisplay';
-import addToCart from '../helpers/addToCart';
-import Context from '../context';
+import displayUSDCurrency from '../helpers/displayCurrency';
+import { FaStar } from "react-icons/fa";
+import VerticalCardProduct from "../components/VerticalCardProduct";
+import CategroyWiseProductDisplay from "../components/CategoryWiseProductDisplay";
+
 
 const ProductDetails = () => {
+
   const [data,setData] = useState({
     productName : "",
     brandName : "",
@@ -28,9 +28,10 @@ const ProductDetails = () => {
     x : 0,
     y : 0
   })
+
   const [zoomImage,setZoomImage] = useState(false)
 
-  const { fetchUserAddToCart } = useContext(Context)
+  // const { fetchUserAddToCart } = useContext(Context)
 
   const navigate = useNavigate()
 
@@ -53,11 +54,15 @@ const ProductDetails = () => {
 
   }
 
-  console.log("data",data)
+
+
+
 
   useEffect(()=>{
     fetchProductDetails()
-  },[params])
+  },[])
+
+
 
   const handleMouseEnterProduct = (imageURL)=>{
     setActiveImage(imageURL)
@@ -66,16 +71,16 @@ const ProductDetails = () => {
   const handleZoomImage = useCallback((e) =>{
     setZoomImage(true)
     const { left , top, width , height } = e.target.getBoundingClientRect()
-    console.log("coordinate", left, top , width , height)
-
-    const x = (e.clientX - left) / width
-    const y = (e.clientY - top) / height
-
+    
+    const x = (e.clientX - left) /width
+    const y = (e.clientY - top) /height
+    // console.log("coordinate" , (e.clientX - left)/ width ,width )
+    
     setZoomImageCoordinate({
       x,
       y
     })
-  },[zoomImageCoordinate])
+  },[])
 
   const handleLeaveImageZoom = ()=>{
     setZoomImage(false)
@@ -87,27 +92,30 @@ const ProductDetails = () => {
     fetchUserAddToCart()
   }
 
-  const handleBuyProduct = async(e,id)=>{
-    await addToCart(e,id)
-    fetchUserAddToCart()
-    navigate("/cart")
+  // const handleBuyProduct = async(e,id)=>{
+  //   await addToCart(e,id)
+  //   fetchUserAddToCart()
+  //   navigate("/cart")
 
-  }
+  // }
+
+
+
 
   return (
     <div className='container mx-auto p-4'>
 
-      <div className='min-h-[200px] flex flex-col lg:flex-row gap-4'>
+      <div className='h-[vh-100] flex flex-col lg:flex-row gap-4 '>
           {/***product Image */}
           <div className='h-96 flex flex-col lg:flex-row-reverse gap-4'>
 
-              <div className='h-[300px] w-[300px] lg:h-96 lg:w-96 bg-slate-200 relative p-2'>
+              <div className='h-[300px] w-[300px] lg:h-96 lg:w-96 relative p-2'>
                   <img src={activeImage} className='h-full w-full object-scale-down mix-blend-multiply' onMouseMove={handleZoomImage} onMouseLeave={handleLeaveImageZoom}/>
 
                     {/**product zoom */}
                     {
                       zoomImage && (
-                        <div className='hidden lg:block absolute min-w-[500px] overflow-hidden min-h-[400px] bg-slate-200 p-1 -right-[510px] top-0'>
+                        <div className=' md:block absolute min-w-[500px] overflow-hidden min-h-[400px] bg-slate-200 p-1 -right-[510px] top-0'>
                           <div
                             className='w-full h-full min-h-[400px] min-w-[500px] mix-blend-multiply scale-150'
                             style={{
@@ -142,7 +150,7 @@ const ProductDetails = () => {
                     ) : (
                       <div className='flex gap-2 lg:flex-col overflow-scroll scrollbar-none h-full'>
                         {
-                          data?.productImage?.map((imgURL,index) =>{
+                          data?.productImage?.map((imgURL) =>{
                             return(
                               <div className='h-20 w-20 bg-slate-200 rounded p-1' key={imgURL}>
                                 <img src={imgURL} className='w-full h-full object-scale-down mix-blend-multiply cursor-pointer' onMouseEnter={()=>handleMouseEnterProduct(imgURL)}  onClick={()=>handleMouseEnterProduct(imgURL)}/>
@@ -199,8 +207,8 @@ const ProductDetails = () => {
                 </div>
 
                 <div className='flex items-center gap-2 text-2xl lg:text-3xl font-medium my-1'>
-                  <p className='text-red-600'>{displayINRCurrency(data.sellingPrice)}</p>
-                  <p className='text-slate-400 line-through'>{displayINRCurrency(data.price)}</p>
+                  <p className='text-red-600'>{displayUSDCurrency(data.sellingPrice)}</p>
+                  <p className='text-slate-400 line-through'>{displayUSDCurrency(data.price)}</p>
                 </div>
 
                 <div className='flex items-center gap-3 my-2'>
@@ -220,11 +228,11 @@ const ProductDetails = () => {
 
 
 
-      {
+      { 
         data.category && (
           <CategroyWiseProductDisplay category={data?.category} heading={"Recommended Product"}/>
         )
-      }
+      } 
      
 
 

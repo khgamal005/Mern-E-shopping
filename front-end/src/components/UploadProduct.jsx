@@ -5,8 +5,11 @@ import productCategory from "../helpers/productCategory";
 import uploadImage from "../helpers/uploadImage";
 import { MdDelete } from "react-icons/md";
 import DisplayImage from "./DisplayImage";
+import SummaryApi from "../common/Api";
+import { toast } from "react-toastify";
 
 
+// eslint-disable-next-line react/prop-types
 const UploadProduct = ({ onClose, fetchData }) => {
   const [data, setData] = useState({
     productName: "",
@@ -68,9 +71,35 @@ const UploadProduct = ({ onClose, fetchData }) => {
     
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault()
     console.log(data)
+
+    const response = await fetch(SummaryApi.uploadProduct.url,{
+      method : SummaryApi.uploadProduct.method,
+      credentials : 'include',
+      headers : {
+        "content-type" : "application/json"
+      },
+      body : JSON.stringify(data)
+    })
+
+    const responseData = await response.json()
+
+    if(responseData.success){
+        toast.success(responseData?.message)
+        onClose()
+         fetchData()
+    }
+
+
+    if(responseData.error){
+      toast.error(responseData?.message)
+    }
+  
+
+
+
   };
 
   return (

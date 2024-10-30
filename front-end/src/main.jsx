@@ -12,14 +12,22 @@ import { store } from './store/store';
 import AdminPanel from "./pages/AdminPanel";
 import AllProducts from "./pages/AllProducts";
 import AllUsers from "./pages/AllUsers";
+import Home from "./pages/Home";
+import CategoryProduct from "./pages/CategoryProduct";
+import ProductDetails from "./pages/ProductDetails";
 
 
 const router = createBrowserRouter([
   {
+    
     path: "/",
     element: <Layout />,
 
     children: [
+      {
+        path : "",
+        element : <Home/>
+    },
       {
         path: "login",
         element: <Login />,
@@ -28,6 +36,14 @@ const router = createBrowserRouter([
         path: "sign-up",
         element: <SignUp />,
       },
+      {
+        path : "product-category/:categoryName",
+        element : <CategoryProduct/>
+    },
+    {
+      path : "product/:id",
+      element : <ProductDetails/>
+  },
       
       {
         path : "admin-panel",

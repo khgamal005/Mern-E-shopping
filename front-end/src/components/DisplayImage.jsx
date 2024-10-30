@@ -1,8 +1,10 @@
-import React from 'react'
+
 import { CgClose } from 'react-icons/cg'
 
 const DisplayImage = ({
+    // eslint-disable-next-line react/prop-types
     imgUrl,
+    // eslint-disable-next-line react/prop-types
     onClose
 }) => {
   return (

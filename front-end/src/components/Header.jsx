@@ -31,7 +31,7 @@ function Header() {
   };
 
   return (
-    <header className="header h-16 shadow-md bg-white fixed w-full z-40'">
+    <header className="header h-16 shadow-md bg-white fixed w-full z-40">
       <div className=" h-full  mx-auto flex items-center px-4 justify-between">
         <div className="logo ">
           <Link to={"/"}>

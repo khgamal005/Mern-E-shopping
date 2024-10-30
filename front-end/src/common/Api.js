@@ -25,6 +25,30 @@ const SummaryApi={
         url : `${baseUrl}/api/update-user`,
         method : "post"
     },
+    uploadProduct : {
+        url : `${baseUrl}/api/upload-product`,
+        method : 'post'
+    },
+    allProduct : {
+        url : `${baseUrl}/api/get-product`,
+        method : 'get'
+    },
+    updateProduct : {
+        url : `${baseUrl}/api/update-product`,
+        method  : 'post'
+    },
+    categoryProduct : {
+        url : `${baseUrl}/api/get-categoryProduct`,
+        method : 'get'
+    },
+    categoryWiseProduct : {
+        url : `${baseUrl}/api/category-product`,
+        method : 'post'
+    },
+    productDetails : {
+        url : `${baseUrl}/api/product-details`,
+        method : 'post'
+    },
 }
 
 
