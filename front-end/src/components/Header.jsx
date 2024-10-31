@@ -3,19 +3,21 @@ import logo from "../assest/khaled.png";
 import { GrSearch } from "react-icons/gr";
 import { useDispatch, useSelector } from "react-redux";
 import { FaRegCircleUser } from "react-icons/fa6";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ROLE from "../common/role";
 import SummaryApi from "../common/Api";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { setUserDetails } from "../store/userSlice";
 import { FaShoppingCart } from "react-icons/fa";
+import Context from "../context";
 
 function Header() {
   const { user } = useSelector((state) => state.user);
   const [menuDisplay, setMenuDisplay] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const context = useContext(Context)
 
 
   const handleLogout = async () => {
@@ -93,7 +95,7 @@ function Header() {
                           <span><FaShoppingCart/></span>
       
                           <div className='bg-red-600 text-white w-5 h-5 rounded-full p-1 flex items-center justify-center absolute -top-2 -right-3'>
-                              <p className='text-sm'>0</p>
+                              <p className='text-sm'>{context?.cartProductCount}</p>
                           </div>
                       </Link>
                       )

@@ -3,38 +3,54 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { ToastContainer } from "react-toastify";
 import SummaryApi from "./common/Api";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Context from './context';
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "./store/userSlice";
+import { useCallback } from "react";
 
 
 const Layout = () => {
   const dispatch = useDispatch()
+  const [cartProductCount,setCartProductCount] = useState(0)
 
-  const fetchUserDetails = async()=>{
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const fetchUserDetails = useCallback(async()=>{
     const dataResponse = await fetch(SummaryApi.current_user.url,{
       method : SummaryApi.current_user.method,
+      credentials : 'include'
+    },[])
+
+    const dataApi = await dataResponse.json()
+    dispatch(setUserDetails(dataApi))
+  })
+
+  const fetchUserAddToCart = async()=>{
+    const dataResponse = await fetch(SummaryApi.addToCartProductCount.url,{
+      method : SummaryApi.addToCartProductCount.method,
       credentials : 'include'
     })
 
     const dataApi = await dataResponse.json()
-    dispatch(setUserDetails(dataApi))
+
+    setCartProductCount(dataApi?.data?.count)
   }
 
   useEffect(()=>{
     /**user Details */
     fetchUserDetails()
     /**user Details cart product */
+    fetchUserAddToCart()
 
-
-  },[])
+  },[fetchUserDetails])
 
   return (
     <>
     <div className='main '>
     <Context.Provider value={{
           fetchUserDetails, // user detail fetch 
+          cartProductCount, // current user add to cart product count,
+          fetchUserAddToCart
 
       }}>
         <ToastContainer 

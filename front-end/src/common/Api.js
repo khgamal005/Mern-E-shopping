@@ -49,6 +49,26 @@ const SummaryApi={
         url : `${baseUrl}/api/product-details`,
         method : 'post'
     },
+    addToCartProduct : {
+        url : `${baseUrl}/api/addtocart`,
+        method : 'post'
+    },
+    addToCartProductCount : {
+        url : `${baseUrl}/api/countAddToCartProduct`,
+        method : 'get'
+    },
+    addToCartProductView : {
+        url : `${baseUrl}/api/view-card-product`,
+        method : 'get'
+    },
+    updateCartProduct : {
+        url : `${baseUrl}/api/update-cart-product`,
+        method : 'post'
+    },
+    deleteCartProduct : {
+        url : `${baseUrl}/api/delete-cart-product`,
+        method : 'post'
+    },
 }
 
 

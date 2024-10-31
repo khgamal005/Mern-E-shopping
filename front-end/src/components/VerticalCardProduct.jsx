@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
-import  { useContext, useEffect, useRef, useState } from 'react'
+import  { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import fetchCategoryWiseProduct from '../helpers/fetchCategoryWiseProduct'
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6'
 import { Link } from 'react-router-dom'
-// import addToCart from '../helpers/addToCart'
-// import Context from '../context'
 import displayUSDCurrency from '../helpers/displayCurrency'
+import addToCart from '../helpers/addToCart'
+import Context from '../context'
 
 const VerticalCardProduct = ({category, heading}) => {
     const [data,setData] = useState([])
@@ -15,24 +15,26 @@ const VerticalCardProduct = ({category, heading}) => {
 
     const scrollElement = useRef()
 
-    // const { fetchUserAddToCart } = useContext(Context)
+    const { fetchUserAddToCart } = useContext(Context)
 
-    // const handleAddToCart = async(e,id)=>{
-    //    await addToCart(e,id)
-    //    fetchUserAddToCart()
-    // }
+    const handleAddToCart = async(e,id)=>{
+       await addToCart(e,id)
+       fetchUserAddToCart()
 
-    const fetchData = async() =>{
+    }
+
+    const fetchData = useCallback(async()=>{
         setLoading(true)
         const categoryProduct = await fetchCategoryWiseProduct(category)
         setLoading(false)
 
         setData(categoryProduct?.data)
-    }
-
+        
+    },[category]) 
+    
     useEffect(()=>{
         fetchData()
-    },[])
+    },[fetchData])
 
     const scrollRight = () =>{
         scrollElement.current.scrollLeft += 300

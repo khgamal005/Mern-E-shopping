@@ -4,8 +4,10 @@ import fetchCategoryWiseProduct from '../helpers/fetchCategoryWiseProduct'
 import displayUSDCurrency from '../helpers/displayCurrency'
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6'
 import { Link } from 'react-router-dom'
+import addToCart from '../helpers/addToCart'
 
 import Context from '../context'
+import { useCallback } from 'react'
 
 const HorizontalCardProduct = ({category, heading}) => {
     const [data,setData] = useState([])
@@ -16,25 +18,30 @@ const HorizontalCardProduct = ({category, heading}) => {
     const scrollElement = useRef()
 
 
-    // const { fetchUserAddToCart } = useContext(Context)
+    const { fetchUserAddToCart } = useContext(Context)
 
-    // const handleAddToCart = async(e,id)=>{
-     
-    //    fetchUserAddToCart()
-    // }
+    const handleAddToCart = async(e,id)=>{
+        await addToCart(e,id)
+        fetchUserAddToCart()
 
-    const fetchData = async() =>{
+     }
+ 
+
+    const fetchData = useCallback(async()=>{
+
+
         setLoading(true)
         const categoryProduct = await fetchCategoryWiseProduct(category)
         setLoading(false)
 
         setData(categoryProduct?.data)
-    }
+
+    },[category]) 
  
 
     useEffect(()=>{
         fetchData()
-    },[])
+    },[fetchData])
 
     const scrollRight = () =>{
         scrollElement.current.scrollLeft += 300
