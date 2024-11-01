@@ -69,6 +69,14 @@ const SummaryApi={
         url : `${baseUrl}/api/delete-cart-product`,
         method : 'post'
     },
+    searchProduct : {
+        url : `${baseUrl}/api/search`,
+        method : 'get'
+    },
+    filterProduct : {
+        url : `${baseUrl}/api/filter-product`,
+        method : 'post'
+    }
 }
 
 
