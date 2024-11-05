@@ -76,7 +76,11 @@ const SummaryApi={
     filterProduct : {
         url : `${baseUrl}/api/filter-product`,
         method : 'post'
-    }
+    },
+    payment : {
+        url : `${baseUrl}/api/checkout`,
+        method  : 'post'
+    },
 }
 
 

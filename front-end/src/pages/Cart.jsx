@@ -4,6 +4,8 @@ import { MdDelete } from "react-icons/md";
 import Context from '../context';
 import SummaryApi from '../common/Api';
 import displayUSDCurrency from '../helpers/displayCurrency';
+import {loadStripe} from '@stripe/stripe-js';
+
 
 const Cart = () => {
     const [data,setData] = useState([])
@@ -115,6 +117,28 @@ const Cart = () => {
             context.fetchUserAddToCart()
         }
     }
+    const handlePayment = async()=>{
+
+        const stripePromise = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+        const response = await fetch(SummaryApi.payment.url,{
+            method : SummaryApi.payment.method,
+            credentials : 'include',
+            headers : {
+                "content-type" : 'application/json'
+            },
+            body : JSON.stringify({
+                cartItems : data
+            })
+        })               
+
+        const responseData = await response.json()
+
+        if(responseData?.id){
+            stripePromise.redirectToCheckout({ sessionId : responseData.id})
+        }
+
+        console.log("payment response",responseData)
+    }
 
     const totalQty = data.reduce((previousValue,currentValue)=> previousValue + currentValue.quantity,0)
     const totalPrice = data.reduce((preve,curr)=> preve + (curr.quantity * curr?.productId?.sellingPrice) ,0)
@@ -194,7 +218,7 @@ const Cart = () => {
                                         <p>{displayUSDCurrency(totalPrice)}</p>    
                                     </div>
 
-                                    <button className='bg-blue-600 p-2 text-white w-full mt-2'>Payment</button>
+                                    <button onClick={handlePayment} className='bg-blue-600 p-2 text-white w-full mt-2'>Payment</button>
 
                                 </div>
                             )
