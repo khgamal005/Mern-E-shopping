@@ -81,6 +81,10 @@ const SummaryApi={
         url : `${baseUrl}/api/checkout`,
         method  : 'post'
     },
+    getOrder : {
+        url : `${baseUrl}/api/order-list`,
+        method : 'get'
+    },
 }
 
 
