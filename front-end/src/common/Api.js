@@ -3,7 +3,8 @@ const baseUrl =  "http://localhost:8080"
 
 const SummaryApi={
     signUp:{
-        url : `${baseUrl}/api/signup`
+        url : `${baseUrl}/api/signup`,
+                method : "post"
     },
     signIN:{
         url :`${baseUrl}/api/signin`,
@@ -85,6 +86,10 @@ const SummaryApi={
         url : `${baseUrl}/api/order-list`,
         method : 'get'
     },
+    allOrder : {
+        url : `${baseUrl}/api/all-order`,
+        method : 'get'
+    }
 }
 
 

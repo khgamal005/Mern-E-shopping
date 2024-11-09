@@ -32,7 +32,6 @@ const CategoryProduct = () => {
     const [filterCategoryList,setFilterCategoryList] = useState([])
     
     const [sortBy,setSortBy] = useState("")
-    console.log(sortBy)
     const fetchData =  useCallback(async ()=>{
       
       const response = await fetch(SummaryApi.filterProduct.url,{

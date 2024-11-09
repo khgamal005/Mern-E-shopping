@@ -1,11 +1,12 @@
-import { useState,useEffect ,useCallback} from "react"
+import { useState,useEffect ,useCallback, useContext} from "react"
 import SummaryApi from "../common/Api"
 import  { useNavigate, useParams } from 'react-router-dom'
 import { FaStarHalf } from "react-icons/fa";
 import displayUSDCurrency from '../helpers/displayCurrency';
 import { FaStar } from "react-icons/fa";
-import VerticalCardProduct from "../components/VerticalCardProduct";
 import CategroyWiseProductDisplay from "../components/CategoryWiseProductDisplay";
+import addToCart from "../helpers/addToCart";
+import Context from "../context";
 
 
 const ProductDetails = () => {
@@ -31,11 +32,14 @@ const ProductDetails = () => {
 
   const [zoomImage,setZoomImage] = useState(false)
 
-  // const { fetchUserAddToCart } = useContext(Context)
+  const { fetchUserAddToCart } = useContext(Context)
 
   const navigate = useNavigate()
 
-  const fetchProductDetails = async()=>{
+
+
+  const fetchProductDetails = useCallback(async()=>{
+
     setLoading(true)
     const response = await fetch(SummaryApi.productDetails.url,{
       method : SummaryApi.productDetails.method,
@@ -51,8 +55,7 @@ const ProductDetails = () => {
 
     setData(dataReponse?.data)
     setActiveImage(dataReponse?.data?.productImage[0])
-
-  }
+  },[params?.id])
 
 
 
@@ -60,7 +63,7 @@ const ProductDetails = () => {
 
   useEffect(()=>{
     fetchProductDetails()
-  },[])
+  },[fetchProductDetails])
 
 
 
@@ -92,12 +95,12 @@ const ProductDetails = () => {
     fetchUserAddToCart()
   }
 
-  // const handleBuyProduct = async(e,id)=>{
-  //   await addToCart(e,id)
-  //   fetchUserAddToCart()
-  //   navigate("/cart")
+  const handleBuyProduct = async(e,id)=>{
+    await addToCart(e,id)
+    fetchUserAddToCart()
+    navigate("/cart")
 
-  // }
+  }
 
 
 
@@ -212,8 +215,11 @@ const ProductDetails = () => {
                 </div>
 
                 <div className='flex items-center gap-3 my-2'>
+                <div className='flex items-center gap-3 my-2'>
                   <button className='border-2 border-red-600 rounded px-3 py-1 min-w-[120px] text-red-600 font-medium hover:bg-red-600 hover:text-white' onClick={(e)=>handleBuyProduct(e,data?._id)}>Buy</button>
                   <button className='border-2 border-red-600 rounded px-3 py-1 min-w-[120px] font-medium text-white bg-red-600 hover:text-red-600 hover:bg-white' onClick={(e)=>handleAddToCart(e,data?._id)}>Add To Cart</button>
+                </div>
+
                 </div>
 
                 <div>

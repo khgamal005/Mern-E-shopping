@@ -4,11 +4,11 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom"
 import SummaryApi from '../common/Api';
-import imageTobase64 from "../helpers/imageTobase64";
-import axios from "axios";
+// import axios from "axios";
 
 
 import { toast } from "react-toastify";
+import uploadImage from "../helpers/uploadImage";
 
 
 const SignUp = () => {
@@ -34,64 +34,107 @@ const SignUp = () => {
       };
     });
   };
+  const handleUploadPic = async(e) =>{
+    // const file = e.target.files[0]
+    // console.log(e.target.files[0])
+    
+    // const imagePic = await imageTobase64(file)
 
-  const handleUploadPic = async (e) => {
+
+
     const file = e.target.files[0];
-    // setImg(URL.createObjectURL(e.target.files[0])
-    const imagePic = await imageTobase64(file);
 
-    setData((preve) => {
-      return {
+    const uploadImageCloudinary = await uploadImage(file);
+
+
+    
+    setData((preve)=>{
+      return{
         ...preve,
-        profilePic: imagePic,
-      };
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (data.password != data.confirmPassword) {
-      toast.error("make sure pass and confirmpassord is correct");
-      return;
-    } 
-    else {
-      const config = {
-        header: "application/json",
-      };
-      const res = await axios.post(
-        SummaryApi.signUp.url,
-        {
-         name:data.name,
-         email:data.email,
-         password :data.password,
-         profilePic : data.profilePic
-        },
-        config
-      );
-
-   
-      if (res.data.success) {
-        toast.success(res.data.message);
-
-        navigate("/login");
-
-        setData({ name: "", email: "", password: "", confirmPassword: "" });
-        
-      }else{
-        toast.error(res.data.message)
+        profilePic : uploadImageCloudinary.url
       }
-
+    })
 
   }
-    
-  };
 
+
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (data.password != data.confirmPassword) {
+  //     toast.error("make sure pass and confirmpassord is correct");
+  //     return;
+  //   } 
+  //   else {
+  //     const config = {
+  //       header: "application/json",
+  //     };
+  //     const res = await axios.post(
+  //       SummaryApi.signUp.url,
+  //       {
+  //        name:data.name,
+  //        email:data.email,
+  //        password :data.password,
+  //        profilePic : data.profilePic
+  //       },
+  //       config
+  //     );
+
+   
+  //     if (res.data.success) {
+  //       toast.success(res.data.message);
+
+  //       navigate("/login");
+
+  //       setData({ name: "", email: "", password: "", confirmPassword: "" });
+        
+  //     }else{
+  //       toast.error(res.data.message)
+  //     }
+
+
+  // }
+    
+  // };
+
+
+
+  const handleSubmit = async(e) =>{
+    e.preventDefault()
+
+    if(data.password === data.confirmPassword){
+
+      const dataResponse = await fetch(SummaryApi.signUp.url,{
+          method : SummaryApi.signUp.method,
+          headers : {
+              "content-type" : "application/json"
+          },
+          body : JSON.stringify(data)
+        })
+  
+        const dataApi = await dataResponse.json()
+
+        if(dataApi.success){
+          toast.success(dataApi.message)
+          navigate("/login")
+        }
+
+        if(dataApi.error){
+          toast.error(dataApi.message)
+        }
+  
+    }else{
+      toast.error("Please check password and confirm password")
+    }
+
+}
   return (
     <section id="signup">
       <div className="mx-auto container p-4">
         <div className="bg-slate-200 p-5 w-full max-w-sm mx-auto">
           <div className="w-20 h-20 mx-auto relative overflow-hidden rounded-full">
             <div>
+            {/* {img && <img src={img} alt="Profile Preview" width={100} />} */}
               <img src={data.profilePic || loginIcons} alt="login icons" />
             </div>
             <form>

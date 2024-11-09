@@ -1,4 +1,4 @@
-const url = `https://api.cloudinary.com/v1_1/davb7cdki/image/upload
+const url = `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_REACT_APP_CLOUD_NAME_CLOUDINARY}/image/upload
 
 `
 

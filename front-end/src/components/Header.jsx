@@ -6,7 +6,7 @@ import { FaRegCircleUser } from "react-icons/fa6";
 import { useContext, useState } from "react";
 import ROLE from "../common/role";
 import SummaryApi from "../common/Api";
-import axios from "axios";
+// import axios from "axios";
 import { toast } from "react-toastify";
 import { setUserDetails } from "../store/userSlice";
 import { FaShoppingCart } from "react-icons/fa";
@@ -36,15 +36,34 @@ function Header() {
       }
     }
   const handleLogout = async () => {
-    axios.defaults.withCredentials = true;
-    const data = await axios.get(SummaryApi.logout_user.url);
-    if (data) {
-      toast.success(data.data.message);
-      dispatch(setUserDetails(null));
-      navigate("/");
-    } else {
-      toast.success(data.data.message);
+    // axios.defaults.withCredentials = true;
+    // const data = await axios.get(SummaryApi.logout_user.url);
+    // if (data) {
+    //   toast.success(data.data.message);
+    //   dispatch(setUserDetails(null));
+    //   navigate("/");
+    // } else {
+    //   toast.success(data.data.message);
+    // }
+
+    const fetchData = await fetch(SummaryApi.logout_user.url,{
+      method : SummaryApi.logout_user.method,
+      credentials : 'include'
+    })
+
+    const data = await fetchData.json()
+
+    if(data.success){
+      toast.success(data.message)
+      dispatch(setUserDetails(null))
+      navigate("/")
     }
+
+    if(data.error){
+      toast.error(data.message)
+    }
+
+
   };
 
 
@@ -104,11 +123,13 @@ function Header() {
                       Admin Panel
                     </Link>
                   )}
+                <Link to={'/order'} className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2' onClick={()=>setMenuDisplay(preve => !preve)}>Order</Link>
+
                 </nav>
               </div>
             )}
             
-           <div className="cart">
+
              {
                      user?.data?._id && (
                       <Link to={"/cart"} className='text-2xl relative'>
@@ -120,25 +141,18 @@ function Header() {
                       </Link>
                       )
                   }
-           </div>
+ 
           </div>
 
           <div>
-            {user ? (
-              <button
-                onClick={handleLogout}
-                className="px-3 py-1 rounded-full text-white bg-red-600 hover:bg-red-700"
-              >
-                Logout
-              </button>
-            ) : (
-              <Link
-                to={"/login"}
-                className="px-3 py-1 rounded-full text-white bg-red-600 hover:bg-red-700"
-              >
-                Login
-              </Link>
-            )}
+          {
+              user  ? (
+                      <button onClick={handleLogout} className='px-3 py-1 rounded-full text-white bg-red-600 hover:bg-red-700'>Logout</button>
+                    )
+                    : (
+                    <Link to={"/login"} className='px-3 py-1 rounded-full text-white bg-red-600 hover:bg-red-700'>Login</Link>
+                    )
+               }
           </div>
         </div>
       </div>

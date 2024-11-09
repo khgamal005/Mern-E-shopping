@@ -69,7 +69,7 @@ const OrderPage = () => {
                               <div>
                                 <div className='text-lg font-medium'>Shipping Details :</div>
                                 {
-                                  item.shipping_options.map((shipping,index)=>{
+                                  item.shipping_options.map((shipping)=>{
                                     return(
                                       <div key={shipping.shipping_rate} className=' ml-1'>
                                         Shipping Amount : {shipping.shipping_amount}
