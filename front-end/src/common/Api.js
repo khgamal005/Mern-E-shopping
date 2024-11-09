@@ -1,4 +1,4 @@
-const baseUrl =  "http://localhost:8080"
+const baseUrl =  import.meta.env.VITE_REACT_APP_Backend
 
 
 const SummaryApi={
