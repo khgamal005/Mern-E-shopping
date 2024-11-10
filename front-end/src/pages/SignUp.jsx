@@ -9,6 +9,7 @@ import SummaryApi from '../common/Api';
 
 import { toast } from "react-toastify";
 import uploadImage from "../helpers/uploadImage";
+import imageTobase64 from "../helpers/imageTobase64";
 
 
 const SignUp = () => {
@@ -35,25 +36,38 @@ const SignUp = () => {
     });
   };
   const handleUploadPic = async(e) =>{
-    // const file = e.target.files[0]
-    // console.log(e.target.files[0])
+    const file = e.target.files[0]
+    const maxSize = 70 * 1024; // 70KB
+
+    // Check if file is selected
+
+  
+    // Check the file size
+    if (file.size > maxSize) {
+      toast.error("File size too large. Please select an image less than 70kB.");
+      return;
+    }
     
-    // const imagePic = await imageTobase64(file)
+   imageTobase64(file).then((res)=>{
+  
+     setData((preve)=>{
+       return{
+         ...preve,
+         // profilePic : uploadImageCloudinary.url
+         profilePic : res
+       }
+     })
+   
+   }).catch((err)=>{
+    toast.error(err)})
 
 
 
-    const file = e.target.files[0];
+    // const file = e.target.files[0];
 
-    const uploadImageCloudinary = await uploadImage(file);
+    // const uploadImageCloudinary = await uploadImage(file);
 
 
-    
-    setData((preve)=>{
-      return{
-        ...preve,
-        profilePic : uploadImageCloudinary.url
-      }
-    })
 
   }
 
