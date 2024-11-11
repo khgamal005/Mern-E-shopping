@@ -10,16 +10,11 @@ const router = require('./routes')
 const app = express()
 app.use(
     cors({
-        origin: 'https://resplendent-crostata-8c03a6.netlify.app', // Allow requests from your Vite frontend
-        methods: ['GET', 'POST', 'PUT', 'DELETE'],
-      allowedHeaders: ['Content-Type', 'Authorization'],
+    origin: 'https://resplendent-crostata-8c03a6.netlify.app', // Allow requests from your Vite frontend
       credentials: true, // Allow cookies if needed
     })
   );
-  app.use((req, res, next) => {
-    res.setHeader('Referrer-Policy', 'no-referrer');
-    next();
-  })
+
 
 // app.use(cors({
 
