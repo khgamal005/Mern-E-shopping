@@ -10,7 +10,7 @@ const router = require('./routes')
 const app = express()
 app.use(
     cors({
-    origin: 'https://resplendent-crostata-8c03a6.netlify.app', // Allow requests from your Vite frontend
+    origin: 'https://front-end-nine-bay.vercel.app', // Allow requests from your Vite frontend
       credentials: true, // Allow cookies if needed
     })
   );
