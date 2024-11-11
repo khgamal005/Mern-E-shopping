@@ -1,4 +1,6 @@
-const baseUrl =  import.meta.env.VITE_REACT_APP_Backend
+
+const baseUrl = import.meta.env.VITE_REACT_APP_Backend; 
+
 
 
 const SummaryApi={

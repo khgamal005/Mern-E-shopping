@@ -12,8 +12,17 @@ const AllProducts = () => {
 
   
   const fetchAllProduct = async() =>{
-    const response = await fetch(SummaryApi.allProduct.url)
+    const response = await fetch(SummaryApi.allProduct.url,{
+      method :SummaryApi.allProduct.method,
+      headers: {
+        'Content-Type': 'application/json',
+        Origin: 'http://localhost:8080',
+      }
+    }
+    )
+
     const dataResponse = await response.json()
+
 
 
     setAllProduct(dataResponse?.data || [])

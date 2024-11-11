@@ -8,7 +8,7 @@ import SummaryApi from '../common/Api';
 
 
 import { toast } from "react-toastify";
-import uploadImage from "../helpers/uploadImage";
+
 import imageTobase64 from "../helpers/imageTobase64";
 
 
